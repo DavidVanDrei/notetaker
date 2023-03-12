@@ -42,6 +42,7 @@ const Content: React.FC = () => {
       },
     }
   );
+ 
 
   const createTopic = api.topic.create.useMutation({
     onSuccess: () => {
@@ -114,16 +115,19 @@ const Content: React.FC = () => {
             </div>
           ))}
         </div>
+        
 
         <NoteEditor
-          onSave={({ title, content }) => {
+          onSave={({ title, content,generate }) => {
             void createNote.mutate({
               title,
               content,
               topicId: selectedTopic?.id ?? "",
+              generate
             });
           }}
         />
+
       </div>
     </div>
   );

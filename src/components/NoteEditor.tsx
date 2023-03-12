@@ -5,12 +5,13 @@ import { markdown, markdownLanguage } from "@codemirror/lang-markdown";
 import { languages } from "@codemirror/language-data";
 
 export const NoteEditor = ({
-  onSave,
+  onSave
 }: {
-  onSave: (note: { title: string; content: string }) => void;
+  onSave: (note: { title: string; content: string ,generate:boolean}) => void;
 }) => {
   const [code, setCode] = useState<string>("");
   const [title, setTitle] = useState<string>("");
+  const [generate,setGenerate] = useState<boolean>(false)
 
   return (
     <div className="card mt-5 border border-gray-200 bg-base-100 shadow-xl">
@@ -36,13 +37,25 @@ export const NoteEditor = ({
           onChange={(value) => setCode(value)}
           className="border border-gray-300"
         />
+
       </div>
       <div className="card-actions justify-end">
+     
+      <div className="form-control">
+        <label className="label cursor-pointer">
+          <div className="label-text">AI Complete</div>
+          <input type="checkbox" defaultChecked={generate} onClick={() => {
+            setGenerate(!generate)
+            console.log("Generated: ",generate)}} 
+      />
+        </label>
+      </div>
         <button
           onClick={() => {
             onSave({
               title,
               content: code,
+              generate:generate
             });
             setCode("");
             setTitle("");
